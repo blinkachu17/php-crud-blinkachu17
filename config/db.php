@@ -1,30 +1,25 @@
 <?php
-
-/**
- * Database Configuration
- *
- * This file defines the database connection constants and establishes a connection
- * to the database using PDO (PHP Data Objects).
- */
-
 // Database credentials
-define('DB_HOST', 'localhost'); // Your database host (e.g., 'localhost' or '127.0.0.1')
-define('DB_NAME', 'php_crud_db');    // Your database name
-define('DB_USER', 'root');      // Your database username
-define('DB_PASS', '');      // Your database password
-define('DB_CHAR', 'utf8mb4');   // The character set
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'branch_directory'); // As specified in your instructions
+define('DB_USER', 'root'); // Default XAMPP username
+define('DB_PASS', '');     // Default XAMPP password
 
-// Data Source Name (DSN)
-$dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHAR;
+// DSN (Data Source Name)
+$dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
 
+// PDO options
 $options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, // Throw exceptions on errors
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,       // Fetch results as associative arrays
-    PDO::ATTR_EMULATE_PREPARES   => false,                  // Use native prepared statements
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES   => false,
 ];
 
 try {
     $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
-} catch (\PDOException $e) {
-    throw new \PDOException($e->getMessage(), (int)$e->getCode());
+} catch (PDOException $e) {
+    // Log the error and terminate the script
+    error_log("Database connection failed: " . $e->getMessage());
+    die("Database connection failed. Please try again later.");
 }
+?>
