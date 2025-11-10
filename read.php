@@ -1,4 +1,7 @@
 <?php
+// Start the session to access session variables
+session_start();
+
 // Include the database connection file
 require_once 'config/db.php';
 
@@ -33,6 +36,8 @@ try {
         .home-link { display: inline-block; margin-top: 20px; color: #007bff; text-decoration: none; }
         .home-link:hover { text-decoration: underline; }
         .no-records { text-align: center; color: #777; padding: 20px; }
+        .message { padding: 10px; margin-bottom: 15px; border-radius: 4px; }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
     </style>
 </head>
 <body>
@@ -40,6 +45,14 @@ try {
 <div class="container">
     <h2>Student Records</h2>
 
+    <?php
+    // Check if a success message is set in the session
+    if (isset($_SESSION['success_message'])) {
+        echo '<div class="message success">' . $_SESSION['success_message'] . '</div>';
+        // Unset the session variable so it doesn't show again on refresh
+        unset($_SESSION['success_message']);
+    }
+    ?>
     <table>
         <thead>
             <tr>
